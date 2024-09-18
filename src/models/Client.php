@@ -8,7 +8,20 @@ use yii\db\ActiveRecord;
 
 class Client extends ActiveRecord
 {
-
+    /**
+     * This is the model class for table "client".
+     *
+     * @property int $id
+     * @property string $name
+     * @property string $cpf
+     * @property int $address_zip
+     * @property string address_street
+     * @property int address_number
+     * @property string address_city
+     * @property string address_state
+     * @property string address_complement
+     * @property string gender
+     */
     public static function tableName(): string
     {
         return 'client';

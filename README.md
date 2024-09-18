@@ -17,6 +17,7 @@ Directory Structure
       assets/             contains assets definition
       config/             contains application configurations
       migrations/         contains migrations
+      factories/          contains database factories
       
       src/
          controllers/        contains controller classes
@@ -41,9 +42,11 @@ Installation
 1. Copy `docker-compose.example.yml` to `docker-compose.yml`
 2. Run `docker compose up -d`
 3. Make sure all containers are running
-4. Run `docker exec -it php-books-api bash` and `php yii testDb/create-test-db` to create tests database
-5. Make sure you have all databases created (production and test)
-6. Run `php yii migrate` inside docker container (`docker exec -it php-books-api bash`)
+4. Run `docker exec -it php-books-api bash` to access docker container
+5. Inside container run `php yii testDb/create-test-db` to create tests database
+6. Make sure you have all databases created (production and test)
+7. Inside container run `php yii migrate` to apply migrations
+8. Inside container run `php yii migrate --db=testdb` to apply migrations in database tests
 
 You can then access the application through the following URL:
 

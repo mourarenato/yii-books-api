@@ -25,7 +25,7 @@ class Book extends ActiveRecord
     {
         return [
             [['isbn'], 'required'],
-            [['isbn'], 'number', 'max' => 13],
+            [['isbn'], 'string', 'max' => 13],
             [['isbn'], 'unique'],
 
             [['title'], 'string', 'max' => 255],

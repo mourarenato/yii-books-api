@@ -5,10 +5,19 @@
 //
 //return $db;
 
+if (YII_ENV_DEV && getenv('PHPUNIT_RUNNING')) {
+    return [
+        'dsn' => getenv('DB_DSN'),
+        'username' => getenv('DB_USER'),
+        'password' => getenv('DB_PASS'),
+        'charset' => 'utf8',
+    ];
+}
+
 return [
-    'dsn' => getenv('DB_DSN'),
-    'username' => getenv('DB_USER'),
-    'password' => getenv('DB_PASS'),
+    'dsn' => "mysql:host=mysql;dbname=books_api_test",
+    'username' => "root",
+    'password' => "password",
     'charset' => 'utf8',
 ];
 
