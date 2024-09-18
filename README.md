@@ -59,9 +59,9 @@ Endpoint(POST): http://10.10.0.22/user/signup
 
 ```
 {
-	"username": "mynickname",
-	"name": "Renato Moura",
-    "password": "mypassword",
+   "username": "mynickname",
+   "name": "Renato Moura",
+   "password": "mypassword",
 }
 ```
 
@@ -71,8 +71,8 @@ Endpoint(POST): http://10.10.0.22/user/signin
 
 ```
 {
-	"username": "mynickname",
-    "password": "mypassword",
+   "username": "mynickname",
+   "password": "mypassword",
 }
 ```
 
