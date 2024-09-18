@@ -3,7 +3,6 @@
 namespace app\services;
 
 use app\repositories\RefreshTokenRepository;
-use app\models\RefreshToken;
 use Firebase\JWT\JWT;
 use Yii;
 use yii\base\Exception;

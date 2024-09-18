@@ -83,6 +83,12 @@ Now you are logged and can access others endpoints
 
 -----
 
+#### If you want to signout (invalidate token):
+
+Endpoint(POST): http://10.10.0.22/user/signout
+
+-----
+
 #### Examples of valid requests:
 
 - `To create a customer`:
