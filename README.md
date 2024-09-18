@@ -8,7 +8,7 @@
 
 Project Information
 -------------------
-This project is a service for creating and listing clients and books, utilizing Yii 2.0.
+This project is a service for creating and listing customers and books, utilizing Yii 2.0.
 
 
 Directory Structure
@@ -81,11 +81,13 @@ Endpoint(POST): http://10.10.0.22/user/signin
 
 Now you are logged and can access others endpoints
 
+-----
+
 #### Examples of valid requests:
 
-- `To create a client`:
+- `To create a customer`:
 
-Endpoint(POST): http://10.10.0.22/client/create
+Endpoint(POST): http://10.10.0.22/customer/create
 
 ```
 {
@@ -100,20 +102,38 @@ Endpoint(POST): http://10.10.0.22/client/create
    "gender":"M"
 }
 ```
+Obs: You can add up to 10 customers per request (there is no queue processing)
 
-- `To delete a client`:
+-----
 
-Endpoint(DELETE): http://10.10.0.22/client/delete
+- `To get a list of customers`:
+
+Endpoint(GET): http://10.10.0.22/customer/list
+
+With query params:
+```
+http://10.10.0.22/customer/list?limit=5&offset=0&order=address_city&filter=Alice
+```
+Obs: You can filter by name or cpf
+
+-----
+
+- `To delete a customer`:
+
+Endpoint(DELETE): http://10.10.0.22/customer/delete
 
 ```
 {
    "cpf":"123.456.789-01",
 }
 ```
+Obs: You can only delete 1 customer per request
 
-- `To create a book`:
+-----
 
-Endpoint(POST): http://10.10.0.22/book/create
+- `To add a book`:
+
+Endpoint(POST): http://10.10.0.22/book/add
 
 ```
 {
@@ -124,6 +144,21 @@ Endpoint(POST): http://10.10.0.22/book/create
     "stock": 100
 }
 ```
+Obs: You can add up to 10 books per request (there is no queue processing)
+
+-----
+
+- `To get a list of books`:
+
+Endpoint(GET): http://10.10.0.22/book/list
+
+With query params:
+```
+http://10.10.0.22/book/list?limit=5&offset=0&order=name&filter=Bob
+```
+Obs: You can filter by name, author and title
+
+-----
 
 - `To delete a book`:
 
@@ -134,6 +169,9 @@ Endpoint(DELETE): http://10.10.0.22/book/delete
    "isbn": "9783161484100",
 }
 ```
+Obs: You can only delete 1 book per request
+
+-----
 
 Testing
 -------

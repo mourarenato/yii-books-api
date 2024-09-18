@@ -2,10 +2,12 @@
 
 namespace app\repositories;
 
+use app\dto\DefaultFilterDto;
 use app\models\Book;
 use InvalidArgumentException;
 use RuntimeException;
 use Throwable;
+use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 
 class BookRepository
@@ -37,5 +39,30 @@ class BookRepository
     {
         $client = new Book();
         $client::findOne($data)->delete();
+    }
+
+    public function getBooks(DefaultFilterDto $dto): ActiveDataProvider
+    {
+        $query = Book::find();
+
+        if ($dto->filter) {
+            $query->andFilterWhere(['or',
+                ['like', 'isbn', $dto->filter],
+                ['like', 'author', $dto->filter],
+                ['like', 'title', $dto->filter],
+            ]);
+        }
+
+        if (in_array($dto->order, ['title', 'price'])) {
+            $query->orderBy($dto->order);
+        }
+
+        return new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => $dto->limit,
+                'page' => $dto->offset / $dto->limit,
+            ],
+        ]);
     }
 }

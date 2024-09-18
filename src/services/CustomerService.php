@@ -3,31 +3,32 @@
 namespace app\services;
 
 use app\dto\DefaultFilterDto;
-use app\repositories\BookRepository;
+use app\repositories\CustomerRepository;
 use Throwable;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 
-class BookService
+class CustomerService
 {
     public function __construct(
-        private readonly BookRepository $bookRepository,
+        private readonly CustomerRepository $customerRepository,
         protected array $requestData = [],
     ) {}
 
     /**
      * @throws Exception
      */
-    public function createBooks(): void
+    public function createCustomers(): void
     {
         $data = json_decode(json_encode($this->requestData), true);
 
         if (count($data) > 10) {
-            throw new Exception('You can only add 10 books per request.');
+            throw new Exception('You can only add 10 customers per request.');
         }
 
-        foreach ($data as $bookData) {
-            $this->bookRepository->createBook($bookData);
+        foreach ($data as $customerData) {
+            $this->customerRepository->createCustomer($customerData);
         }
     }
 
@@ -35,18 +36,18 @@ class BookService
      * @throws Exception
      * @throws Throwable
      */
-    public function deleteBook(): void
+    public function deleteCustomer(): void
     {
         $data = json_decode(json_encode($this->requestData), true);
 
         if (count($data) > 1) {
-            throw new Exception('You can only delete 1 book per request.');
+            throw new Exception('You can only delete 1 customer per request.');
         }
 
-        $this->bookRepository->deleteBook($this->requestData);
+        $this->customerRepository->deleteCustomer($this->requestData);
     }
 
-    public function listBooks(): ActiveDataProvider
+    public function listCustomers(): ActiveDataProvider
     {
         $dto = new DefaultFilterDto();
         $dto->limit = $this->requestData['limit'];
@@ -54,6 +55,6 @@ class BookService
         $dto->order = $this->requestData['order'];
         $dto->filter = $this->requestData['filter'];
 
-        return  $this->bookRepository->getBooks($dto);
+        return  $this->customerRepository->getCustomers($dto);
     }
 }

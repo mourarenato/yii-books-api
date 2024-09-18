@@ -2,7 +2,7 @@
 
 namespace factories;
 
-use app\models\Client;
+use app\models\Customer;
 use Faker\Factory as Faker;
 
 class ClientFactory
@@ -11,7 +11,7 @@ class ClientFactory
     {
         $faker = Faker::create();
 
-        return new Client([
+        return new Customer([
             'name' => $faker->name,
             'cpf' => $faker->unique()->numerify('###.###.###-##'),
             'address_zip' => $faker->numerify('#####-###'),

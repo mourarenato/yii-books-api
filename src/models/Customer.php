@@ -6,10 +6,10 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 
-class Client extends ActiveRecord
+class Customer extends ActiveRecord
 {
     /**
-     * This is the model class for table "client".
+     * This is the model class for table "customers".
      *
      * @property int $id
      * @property string $name
@@ -24,7 +24,7 @@ class Client extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return 'client';
+        return 'customers';
     }
 
     public function rules(): array

@@ -77,9 +77,9 @@ class UserController extends Controller
             }
 
             $userService = new UserService(
-                $params,
                 new UserRepository(),
                 new JwtAuthService(new RefreshTokenService(new RefreshTokenRepository())),
+                $params,
             );
 
             $token = $userService->signin();
@@ -124,9 +124,9 @@ class UserController extends Controller
 
             $userRepository = new UserRepository();
             $userService = new UserService(
-                $params,
                 $userRepository,
-                new JwtAuthService(new RefreshTokenService(new RefreshTokenRepository()))
+                new JwtAuthService(new RefreshTokenService(new RefreshTokenRepository())),
+                $params,
             );
 
             $user = $userService->signup();
@@ -155,9 +155,9 @@ class UserController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
 
             $userService = new UserService(
-                [],
                 new UserRepository(),
-                new JwtAuthService(new RefreshTokenService(new RefreshTokenRepository()))
+                new JwtAuthService(new RefreshTokenService(new RefreshTokenRepository())),
+                []
             );
 
             $userService->signout();

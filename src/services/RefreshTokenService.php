@@ -22,7 +22,6 @@ class RefreshTokenService
     {
         $key = Yii::$app->params['jwtSecretKey'];
         $expiresAt = time() + 60 * 60;
-//        $expiresAt = time() + 60;
 
         $payload = [
             'iat' => time(), // issued at

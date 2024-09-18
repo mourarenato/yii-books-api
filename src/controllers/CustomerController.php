@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use app\components\JwtAuthFilter;
-use app\repositories\BookRepository;
-use app\services\BookService;
+use app\repositories\CustomerRepository;
+use app\services\CustomerService;
 use Exception;
 use Throwable;
 use Yii;
@@ -12,21 +12,21 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 
-class BookController extends Controller
+class CustomerController extends Controller
 {
     public function behaviors(): array
     {
         return [
             'authenticator' => [
                 'class' => JwtAuthFilter::class,
-                'only' => ['create'],
+                'only' => ['signout', 'create', 'delete', 'list'],
             ],
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create'],
+                        'actions' => ['signin', 'signout', 'signup', 'create'],
                         'verbs' => ['POST'],
                     ],
                     [
@@ -51,18 +51,18 @@ class BookController extends Controller
 
             $data = Yii::$app->request->getBodyParams();
 
-            $book = new BookService(new BookRepository(), $data);
+            $customers = new CustomerService(new CustomerRepository(), $data);
 
-            $book->createBooks();
+            $customers->createCustomers();
 
             return [
-                'message' => 'Book(s) added with success'
+                'message' => 'Customer(s) created with success'
             ];
         } catch (Throwable $e) {
             Yii::$app->response->statusCode = 500;
             Yii::error($e->getMessage());
             return [
-                'error' => 'Failed to add book(s)',
+                'error' => 'Failed to create customer(s)',
                 'message' => $e->getMessage()
             ];
         }
@@ -75,22 +75,22 @@ class BookController extends Controller
 
             $data = Yii::$app->request->getBodyParams();
 
-            if (!isset($data['isbn'])) {
-                throw new Exception('Isbn must be sent.');
+            if (!isset($data['cpf'])) {
+                throw new Exception('Cpf must be sent.');
             }
 
-            $book = new BookService(new BookRepository(), $data);
+            $customers = new CustomerService(new CustomerRepository(), $data);
 
-            $book->deleteBook();
+            $customers->deleteCustomer();
 
             return [
-                'message' => 'Book deleted with success'
+                'message' => 'Customers deleted with success'
             ];
         } catch (Throwable $e) {
             Yii::$app->response->statusCode = 500;
             Yii::error($e->getMessage());
             return [
-                'error' => 'Failed to delete book',
+                'error' => 'Failed to delete customer(s)',
                 'message' => $e->getMessage()
             ];
         }
@@ -109,12 +109,12 @@ class BookController extends Controller
 
             $data = ['limit' => $limit, 'offset' => $offset, 'order' => $order, 'filter' => $filter];
 
-            $bookService = new BookService(new BookRepository(), $data);
+            $customers = new CustomerService(new CustomerRepository(), $data);
 
-            $dataProvider = $bookService->listBooks();
+            $dataProvider = $customers->listCustomers();
 
             return $this->asJson([
-                'books' => $dataProvider->models,
+                'customers' => $dataProvider->models,
                 'total' => $dataProvider->getTotalCount(),
                 'pageSize' => $dataProvider->pagination->pageSize,
                 'currentPage' => $dataProvider->pagination->page + 1,
@@ -124,7 +124,7 @@ class BookController extends Controller
             Yii::$app->response->statusCode = 500;
             Yii::error($e->getMessage());
             return [
-                'error' => 'Failed to get books list',
+                'error' => 'Failed to get customer(s) list',
                 'message' => $e->getMessage()
             ];
         }

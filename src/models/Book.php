@@ -5,7 +5,7 @@ namespace app\models;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "book".
+ * This is the model class for table "books".
  *
  * @property int $id
  * @property string $isbn
@@ -18,7 +18,7 @@ class Book extends ActiveRecord
 {
     public static function tableName(): string
     {
-        return 'book';
+        return 'books';
     }
 
     public function rules(): array

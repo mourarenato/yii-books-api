@@ -14,9 +14,9 @@ use yii\web\UnprocessableEntityHttpException;
 class UserService
 {
     public function __construct(
-        protected array $requestData,
         private readonly UserRepository $userRepository,
         protected JwtAuthService $jwtAuthService,
+        protected array $requestData = [],
     ) {}
 
     /**

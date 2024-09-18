@@ -3,16 +3,13 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%client}}`.
+ * Handles the creation of table `{{%customers}}`.
  */
-class m240918_004833_create_client_table extends Migration
+class m240918_085453_create_customers_table extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function safeUp(): void
     {
-        $this->createTable('client', [
+        $this->createTable('customers', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
             'cpf' => $this->string(14)->notNull()->unique(),
@@ -25,16 +22,13 @@ class m240918_004833_create_client_table extends Migration
             'gender' => $this->string(1),
         ]);
 
-        $this->createIndex('idx-client-name', 'client', 'name');
-        $this->createIndex('idx-client-cpf', 'client', 'cpf');
-        $this->createIndex('idx-client-address-city', 'client', 'address_city');
+        $this->createIndex('idx-customers-name', 'customers', 'name');
+        $this->createIndex('idx-customers-cpf', 'customers', 'cpf');
+        $this->createIndex('idx-customers-address-city', 'customers', 'address_city');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function safeDown(): void
     {
-        $this->dropTable('{{%client}}');
+        $this->dropTable('{{%customers}}');
     }
 }
