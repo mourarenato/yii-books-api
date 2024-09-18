@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        displayDetailsOnTestsThatTriggerDeprecations="true"
+        displayDetailsOnTestsThatTriggerErrors="true"
+        displayDetailsOnTestsThatTriggerNotices="true"
+        displayDetailsOnTestsThatTriggerWarnings="true"
+        colors="true"
+        bootstrap="tests/_bootstrap.php"
+>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/unit</directory>
+        </testsuite>
+    </testsuites>
+    <coverage />
+    <php>
+        <env name="YII_ENV" value="test"/>
+        <env name="YII_DEBUG" value="1"/>
+        <env name="DB_DSN" value="mysql:host=mysql;dbname=books_api_test"/>
+        <env name="DB_USER" value="root"/>
+        <env name="DB_PASS" value="password"/>
+    </php>
+</phpunit>

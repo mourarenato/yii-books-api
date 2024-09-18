@@ -1,0 +1,58 @@
+version: '3'
+services:
+    nginx:
+        image: nginx
+        container_name: nginx-books-api
+        restart: always
+        ports:
+            - "80:80"
+        volumes:
+            - ./docker/nginx_conf:/etc/nginx/conf.d
+            - ./:/var/www/html
+        depends_on:
+            - php
+        networks:
+            services-books-api:
+                ipv4_address: 10.10.0.22
+
+    php:
+        build:
+            context: .
+            dockerfile: ./Dockerfile_php
+        container_name: php-books-api
+        restart: always
+        tty: true
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./:/var/www/html
+            - /usr/bin/ssh:/usr/bin/ssh
+        environment:
+            - PHP_IDE_CONFIG=serverName=Local
+        networks:
+            services-books-api:
+                ipv4_address: 10.10.0.42
+
+    mysql:
+        image: mysql:8
+        container_name: mysql
+        restart: always
+        environment:
+            - MYSQL_DATABASE=yii_books_api_db
+            - MYSQL_MAX_ALLOWED_PACKET=128M
+            - MYSQL_MAX_EXECUTION_TIME=300
+            - MYSQL_ROOT_PASSWORD=password
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./db:/var/lib/mysql
+        networks:
+            services-books-api:
+                ipv4_address: 10.10.0.32
+
+networks:
+    services-books-api:
+        ipam:
+            driver: default
+            config:
+                - subnet: 10.10.0.0/20
