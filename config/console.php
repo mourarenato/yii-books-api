@@ -10,7 +10,7 @@ $config = [
     'controllerNamespace' => 'app\commands',
     'controllerMap' => [
         'testDb' => [
-            'class' => 'app\src\commands\DbSetupCommand',
+            'class' => 'app\commands\DbSetupCommand',
         ],
     ],
     'aliases' => [

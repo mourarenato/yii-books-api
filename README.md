@@ -8,7 +8,7 @@
 
 Project Information
 -------------------
-This project is an API to create clients and books made with Yii2
+This project is a service for creating and listing clients and books, utilizing Yii 2.0.
 
 
 Directory Structure
@@ -38,15 +38,79 @@ Installation
 
 ### Getting started with docker
 
-1. Run `docker compose up -d`
-2. Make sure all containers is up and working
-3. Make sure you have the databases created in your postgres database (production and test)
-5Run `php yii migrate` in docker container
+1. Copy `docker-compose.example.yml` to `docker-compose.yml`
+2. Run `docker compose up -d`
+3. Make sure all containers are running
+4. Run `docker exec -it php-books-api bash` and `php yii testDb/create-test-db` to create tests database
+5. Make sure you have all databases created (production and test)
+6. Run `php yii migrate` inside docker container (`docker exec -it php-books-api bash`)
 
 You can then access the application through the following URL:
 
-    http://10.0.0.22:80
+    http://10.10.0.22:80
 
+
+Using the project
+-------
+
+#### Create a user:
+
+Endpoint(POST): http://10.10.0.22/user/signup
+
+```
+{
+	"username": "mynickname",
+	"name": "Renato Moura",
+    "password": "mypassword",
+}
+```
+
+#### After you must authenticate to get your bearer token:
+
+Endpoint(POST): http://10.10.0.22/user/signin
+
+```
+{
+	"username": "mynickname",
+    "password": "mypassword",
+}
+```
+
+Now you are logged and can access others endpoints
+
+#### Examples of valid requests:
+
+- `To create a client`:
+
+Endpoint(POST): http://10.10.0.22/client/create
+
+```
+{
+   "name":"John Doe",
+   "cpf":"123.456.789-01",
+   "address_zip":12345678,
+   "address_street":"Main St",
+   "address_number":123,
+   "address_city":"Springfield",
+   "address_state":"IL",
+   "address_complement":"Apt 4B",
+   "gender":"M"
+}
+```
+
+- `To create a book`:
+
+Endpoint(POST): http://10.10.0.22/book/create
+
+```
+{
+    "isbn": "9783161484100",
+    "title": "Sample Book Title",
+    "author": "John Doe",
+    "price": 19.99,
+    "stock": 100
+}
+```
 
 Testing
 -------
