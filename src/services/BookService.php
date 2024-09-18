@@ -3,6 +3,7 @@
 namespace app\services;
 
 use app\repositories\BookRepository;
+use Throwable;
 use yii\db\Exception;
 
 class BookService
@@ -18,5 +19,14 @@ class BookService
     public function createBook(array $data): void
     {
         $this->bookRepository->createBook($data);
+    }
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function deleteBook(array $data): void
+    {
+        $this->bookRepository->deleteBook($data);
     }
 }

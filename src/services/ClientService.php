@@ -3,6 +3,8 @@
 namespace app\services;
 
 use app\repositories\ClientRepository;
+use Throwable;
+use yii\db\Exception;
 
 class ClientService
 {
@@ -12,9 +14,19 @@ class ClientService
     ) {}
 
     /**
+     * @throws Exception
      */
     public function createClient(array $data): void
     {
         $this->clientRepository->createClient($data);
+    }
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function deleteClient(array $data): void
+    {
+        $this->clientRepository->deleteClient($data);
     }
 }

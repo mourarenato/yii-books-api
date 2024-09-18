@@ -5,22 +5,37 @@ namespace app\repositories;
 use app\models\Client;
 use InvalidArgumentException;
 use RuntimeException;
+use Throwable;
+use yii\db\Exception;
 
 class ClientRepository
 {
+    /**
+     * @throws Exception
+     */
     public function createClient(array $data): Client
     {
-        $user = new Client();
-        $user->load($data, '');
+        $client = new Client();
+        $client->load($data, '');
 
-        if (!$user->validate()) {
-            throw new InvalidArgumentException('Validation failed: ' . json_encode($user->errors));
+        if (!$client->validate()) {
+            throw new InvalidArgumentException('Validation failed: ' . json_encode($client->errors));
         }
 
-        if (!$user->save()) {
-            throw new RuntimeException('Failed to save user');
+        if (!$client->save()) {
+            throw new RuntimeException('Failed to save client');
         }
 
-        return $user;
+        return $client;
+    }
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function deleteClient(array $data): void
+    {
+        $client = new Client();
+        $client::findOne($data)->delete();
     }
 }

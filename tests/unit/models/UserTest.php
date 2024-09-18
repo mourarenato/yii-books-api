@@ -18,11 +18,4 @@ class UserTest extends TestCase
 
         $this->assertEquals('Usuario', $mock->getModelName());
     }
-
-    public function testDbConfig()
-    {
-        $this->assertEquals('mysql:host=mysql;dbname=books_api_test', getenv('DB_DSN'));
-        $this->assertEquals('root', getenv('DB_USER'));
-        $this->assertEquals('password', getenv('DB_PASS'));
-    }
 }

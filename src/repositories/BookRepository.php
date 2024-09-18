@@ -5,6 +5,7 @@ namespace app\repositories;
 use app\models\Book;
 use InvalidArgumentException;
 use RuntimeException;
+use Throwable;
 use yii\db\Exception;
 
 class BookRepository
@@ -26,5 +27,15 @@ class BookRepository
         }
 
         return $book;
+    }
+
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
+    public function deleteBook(array $data): void
+    {
+        $client = new Book();
+        $client::findOne($data)->delete();
     }
 }

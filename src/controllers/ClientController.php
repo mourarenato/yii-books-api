@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\JwtAuthFilter;
 use app\repositories\ClientRepository;
 use app\services\ClientService;
+use Exception;
 use Throwable;
 use Yii;
 use yii\filters\AccessControl;
@@ -18,7 +19,7 @@ class ClientController extends Controller
         return [
             'authenticator' => [
                 'class' => JwtAuthFilter::class,
-                'only' => ['signout', 'create'],
+                'only' => ['signout', 'create', 'delete'],
             ],
             'access' => [
                 'class' => AccessControl::class,
@@ -27,6 +28,11 @@ class ClientController extends Controller
                         'allow' => true,
                         'actions' => ['signin', 'signout', 'signup', 'create'],
                         'verbs' => ['POST'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'verbs' => ['DELETE'],
                     ],
                 ],
             ],
@@ -49,9 +55,37 @@ class ClientController extends Controller
             ];
         } catch (Throwable $e) {
             Yii::$app->response->statusCode = 500;
-            Yii::info($e->getMessage());
+            Yii::error($e->getMessage());
             return [
                 'error' => 'Failed to create client',
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function actionDelete(): array
+    {
+        try {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $data = Yii::$app->request->getBodyParams();
+
+            if (!isset($data['cpf'])) {
+                throw new Exception('Cpf must be sent.');
+            }
+
+            $client = new ClientService($data, new ClientRepository());
+
+            $client->deleteClient($data);
+
+            return [
+                'message' => 'Client deleted with success'
+            ];
+        } catch (Throwable $e) {
+            Yii::$app->response->statusCode = 500;
+            Yii::error($e->getMessage());
+            return [
+                'error' => 'Failed to delete client',
                 'message' => $e->getMessage()
             ];
         }

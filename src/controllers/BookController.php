@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\JwtAuthFilter;
 use app\repositories\BookRepository;
 use app\services\BookService;
+use Exception;
 use Throwable;
 use Yii;
 use yii\filters\AccessControl;
@@ -28,6 +29,11 @@ class BookController extends Controller
                         'actions' => ['create'],
                         'verbs' => ['POST'],
                     ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'verbs' => ['DELETE'],
+                    ],
                 ],
             ],
         ];
@@ -49,9 +55,37 @@ class BookController extends Controller
             ];
         } catch (Throwable $e) {
             Yii::$app->response->statusCode = 500;
-            Yii::info($e->getMessage());
+            Yii::error($e->getMessage());
             return [
                 'error' => 'Failed to create book',
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function actionDelete(): array
+    {
+        try {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $data = Yii::$app->request->getBodyParams();
+
+            if (!isset($data['isbn'])) {
+                throw new Exception('Isbn must be sent.');
+            }
+
+            $client = new BookService($data, new BookRepository());
+
+            $client->deleteBook($data);
+
+            return [
+                'message' => 'Book deleted with success'
+            ];
+        } catch (Throwable $e) {
+            Yii::$app->response->statusCode = 500;
+            Yii::error($e->getMessage());
+            return [
+                'error' => 'Failed to delete book',
                 'message' => $e->getMessage()
             ];
         }
