@@ -54,6 +54,6 @@ class BookService
         $dto->order = $this->requestData['order'];
         $dto->filter = $this->requestData['filter'];
 
-        return  $this->bookRepository->getBooks($dto);
+        return $this->bookRepository->getBooks($dto);
     }
 }

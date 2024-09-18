@@ -5,7 +5,7 @@ namespace factories;
 use app\models\Customer;
 use Faker\Factory as Faker;
 
-class ClientFactory
+class CustomerFactory
 {
     public static function create()
     {
