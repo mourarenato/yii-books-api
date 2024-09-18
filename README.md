@@ -101,6 +101,16 @@ Endpoint(POST): http://10.10.0.22/client/create
 }
 ```
 
+- `To delete a client`:
+
+Endpoint(DELETE): http://10.10.0.22/client/delete
+
+```
+{
+   "cpf":"123.456.789-01",
+}
+```
+
 - `To create a book`:
 
 Endpoint(POST): http://10.10.0.22/book/create
@@ -112,6 +122,16 @@ Endpoint(POST): http://10.10.0.22/book/create
     "author": "John Doe",
     "price": 19.99,
     "stock": 100
+}
+```
+
+- `To delete a book`:
+
+Endpoint(DELETE): http://10.10.0.22/book/delete
+
+```
+{
+   "isbn": "9783161484100",
 }
 ```
 
