@@ -2,6 +2,7 @@
 /vendor
 .env
 docker-compose.yml
+.bowerrc
 .env.production
 .phpunit.result.cache
 auth.json
